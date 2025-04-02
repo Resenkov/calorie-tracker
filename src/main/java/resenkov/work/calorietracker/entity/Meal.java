@@ -4,25 +4,24 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "meals")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Meal {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ColumnDefault("nextval('meals_id_seq')")
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @NotNull
@@ -30,27 +29,27 @@ public class Meal {
     private LocalDate mealDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dish_id")
+    @JoinColumn(name = "dish_id", nullable = false)
     private Dish dish;
 
-    @Min(value = 1, message = "Порции не могут быть отрицательными!")
-    @Column(name = "servings")
+    @Min(value = 1, message = "Количество порций должно быть не менее 1")
+    @Column(nullable = false)
     private Integer servings;
 
-    public double getTotalCalories() {
+    // Методы для расчета нутриентов
+    public Double getTotalCalories() {
         return dish.getCaloriesPerServing() * servings;
     }
 
-    public double getTotalProtein() {
+    public Double getTotalProtein() {
         return dish.getProtein() * servings;
     }
 
-    public double getTotalFats() {
+    public Double getTotalFats() {
         return dish.getFats() * servings;
     }
 
-    public double getTotalCarbohydrates() {
+    public Double getTotalCarbohydrates() {
         return dish.getCarbohydrates() * servings;
     }
-
 }
