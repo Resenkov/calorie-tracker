@@ -1,13 +1,19 @@
 package resenkov.work.calorietracker.service;
 
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import resenkov.work.calorietracker.dto.UserDTO;
 import resenkov.work.calorietracker.entity.User;
+import resenkov.work.calorietracker.exception.UserNotFoundException;
 import resenkov.work.calorietracker.mapping.UserMapper;
 import resenkov.work.calorietracker.model.DailyCaloriesCalculator;
+import resenkov.work.calorietracker.repository.MealRepository;
 import resenkov.work.calorietracker.repository.UserRepository;
+
+import java.time.LocalDate;
 
 
 @Service
@@ -16,6 +22,7 @@ import resenkov.work.calorietracker.repository.UserRepository;
 public class UserService {
     private final UserRepository userRepository;
     private final DailyCaloriesCalculator caloriesCalculator;
+    private final MealRepository mealRepository;
 
     public UserDTO registerUser(UserDTO registrationDto) {
         if (userRepository.existsByEmail(registrationDto.getEmail())) {
@@ -54,5 +61,34 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+
+    public CalorieCheckResult checkDailyCalories(Long userId, LocalDate date) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        Double consumedCalories = mealRepository.calculateDailyCalories(userId, date);
+        if (consumedCalories == null) consumedCalories = 0.0;
+
+        boolean isGoalAchieved = consumedCalories <= user.getDailyCalories();
+        double remaining = user.getDailyCalories() - consumedCalories;
+
+        return new CalorieCheckResult(
+                date,
+                consumedCalories,
+                user.getDailyCalories(),
+                isGoalAchieved,
+                remaining
+        );
+    }
+    @Data
+    @AllArgsConstructor
+    public static class CalorieCheckResult {
+        private LocalDate date;
+        private double caloriesConsumed;
+        private double dailyGoal;
+        private boolean isGoalAchieved;
+        private double remainingCalories;
     }
 }

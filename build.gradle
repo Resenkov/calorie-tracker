@@ -7,6 +7,13 @@ plugins {
 group = 'resenkov.work'
 version = '0.0.1-SNAPSHOT'
 
+test {
+    useJUnitPlatform()  // Для JUnit 5
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)

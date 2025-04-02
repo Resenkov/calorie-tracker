@@ -2,11 +2,15 @@ package resenkov.work.calorietracker.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import resenkov.work.calorietracker.dto.UserDTO;
 import resenkov.work.calorietracker.service.UserService;
+
+import java.time.LocalDate;
+
 
 
 @RestController
@@ -49,5 +53,20 @@ public class UserController {
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
         UserDTO user = userService.getUserById(id);
         return ResponseEntity.ok(user);
+    }
+
+    /**
+    Метод для проверки лимита дневной нормы калорий.
+     **/
+
+    @GetMapping("/{userId}/calories/check/{date}")
+    public ResponseEntity<UserService.CalorieCheckResult> checkCalories(
+            @PathVariable Long userId,
+            @PathVariable
+            @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
+
+        return ResponseEntity.ok(
+                userService.checkDailyCalories(userId, date)
+        );
     }
 }

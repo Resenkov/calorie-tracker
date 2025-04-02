@@ -113,7 +113,7 @@ public class MealService {
                 .sum();
     }
 
-    private MealItemResponseDTO convertToItemDTO(Meal meal) {
+    public MealItemResponseDTO convertToItemDTO(Meal meal) {
         MealItemResponseDTO dto = new MealItemResponseDTO();
         dto.setDishId(meal.getDish().getId());
         dto.setDishName(meal.getDish().getName());

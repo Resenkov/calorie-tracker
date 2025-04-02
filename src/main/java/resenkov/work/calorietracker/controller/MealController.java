@@ -26,6 +26,10 @@ public class MealController {
                 .body(mealService.createMeal(dto));
     }
 
+    /**
+     Отчет за день с суммой всех калорий и приемов пищи;
+     **/
+
     @GetMapping("/byuser/{userId}/date/{date}")
     public ResponseEntity<List<MealResponseDTO>> getMealsByDate(
             @PathVariable Long userId,

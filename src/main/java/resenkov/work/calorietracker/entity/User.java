@@ -83,6 +83,5 @@ public class User {
         Gender(String displayName) {
             this.displayName = displayName;
         }
-
     }
 }

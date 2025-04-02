@@ -45,7 +45,7 @@ public class Dish {
     @Column(name = "carbohydrates")
     private double carbohydrates;
 
-    @OneToMany(mappedBy = "dish")
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals;
 
 }
