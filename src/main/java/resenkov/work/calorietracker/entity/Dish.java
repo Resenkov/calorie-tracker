@@ -1,4 +1,4 @@
-package resenkov.work.calorietracker.Entity;
+package resenkov.work.calorietracker.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;

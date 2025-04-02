@@ -1,4 +1,4 @@
-package resenkov.work.calorietracker.Entity;
+package resenkov.work.calorietracker.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -37,7 +37,6 @@ public class User {
     @Column(name = "age")
     private Integer age;
 
-
     @Column(name = "weight")
     @DecimalMin(value = "0.1", message = "Weight must be positive")
     private double weight;
@@ -58,14 +57,32 @@ public class User {
 
     @Getter
     public enum Goal {
-        ПОХУДЕНИЕ("Похудение"),
-        ПОДДЕРЖАНИЕ("Поддержание"),
-        НАБОР_МАССЫ("Набор массы");
+        Похудение("Похудение"),
+        Поддержание("Поддержание"),
+        Набор("Набор массы");
 
         private final String displayName;
 
         Goal(String displayName) {
             this.displayName = displayName;
         }
+
+    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "VARCHAR(10) CHECK (gender IN ('MALE', 'FEMALE', 'OTHER'))")
+    private Gender gender;
+
+    @Getter
+    public enum Gender {
+        MALE("Мужской"),
+        FEMALE("Женский"),
+        OTHER("Другое");
+
+        private final String displayName;
+
+        Gender(String displayName) {
+            this.displayName = displayName;
+        }
+
     }
 }
