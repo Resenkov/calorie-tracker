@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "8d15a3fe-453e-4429-97a5-4a1557260736",
+		"name": "MealCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40039179"
+	},
+	"item": [
+		{
+			"name": "GetMealByUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/meal/byuser/1/date/2023-10-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meal",
+						"byuser",
+						"1",
+						"date",
+						"2023-10-01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateMeal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": 1,\r\n  \"mealDate\": \"2025-04-15\",\r\n  \"mealItems\": [\r\n    {\r\n      \"dishId\": 5,\r\n      \"servings\": 2\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/meal/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meal",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
