@@ -41,7 +41,7 @@
 | Компонент       | Технология         |
 |----------------|-------------------|
 | Backend        | Java 17 + Spring Boot 3 |
-| База данных    | PostgreSQL 15+     |
+| База данных    | PostgreSQL 16+     |
 | ORM            | Spring Data JPA    |
 | Тестирование   | JUnit 5 + Mockito  |
 
