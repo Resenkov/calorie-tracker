@@ -98,6 +98,11 @@ MealCollection.postman_collection.json - запросы к перекусам
 
 UserCaloriesCollection.postman_collection.json - запросы для пользователей
 
+Метод NormaCcal - эндпоинт показывающий превысил ли лимит дневной нормы пользователь.
+
+HistoryOfDays - для создания отчета по дням.
+
+
 Импортировать в Postman через:
 ```
 File → Import → Выбрать файл коллекции
