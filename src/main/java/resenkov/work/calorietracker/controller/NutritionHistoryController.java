@@ -16,13 +16,16 @@ import java.util.List;
 public class NutritionHistoryController {
     private final NutritionHistoryService nutritionHistoryService;
 
+    /**
+     * Отчет о питании за определенный период времени.
+     **/
     @GetMapping
     public ResponseEntity<List<NutritionHistoryDTO>> getNutritionHistory(
             @PathVariable Long userId,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        // Если даты не указаны - берем последние 7 дней
+
         if (startDate == null) {
             endDate = LocalDate.now();
             startDate = endDate.minusDays(7);

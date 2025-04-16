@@ -33,7 +33,6 @@ class MealServiceTest {
     @InjectMocks
     private MealService mealService;
 
-    // Тестовые данные
     private User createTestUser() {
         User user = new User();
         user.setId(1L);
@@ -65,10 +64,8 @@ class MealServiceTest {
         return dto;
     }
 
-    // Тесты для createMeal
     @Test
     void createMeal_WithValidData_ShouldReturnResponseDTO() {
-        // Подготовка
         MealCreateDTO dto = createTestMealCreateDTO();
         User user = createTestUser();
         Dish dish = createTestDish();
@@ -77,10 +74,8 @@ class MealServiceTest {
         when(dishRepository.findById(1L)).thenReturn(Optional.of(dish));
         when(mealRepository.saveAll(anyList())).thenAnswer(inv -> inv.getArgument(0));
 
-        // Вызов
         MealResponseDTO result = mealService.createMeal(dto);
 
-        // Проверки
         assertNotNull(result);
         assertEquals(dto.getMealDate(), result.getMealDate());
         assertEquals(1, result.getItems().size());
@@ -111,10 +106,9 @@ class MealServiceTest {
         assertThrows(ResourceNotFoundException.class, () -> mealService.createMeal(dto));
     }
 
-    // Тесты для getMealsByUserAndDate
+
     @Test
     void getMealsByUserAndDate_WithValidData_ShouldReturnResponseDTO() {
-        // Подготовка
         LocalDate date = LocalDate.now();
         User user = createTestUser();
         Dish dish = createTestDish();
@@ -128,10 +122,9 @@ class MealServiceTest {
         when(userRepository.existsById(1L)).thenReturn(true);
         when(mealRepository.findByUserIdAndMealDate(1L, date)).thenReturn(List.of(meal));
 
-        // Вызов
+
         List<MealResponseDTO> result = mealService.getMealsByUserAndDate(1L, date);
 
-        // Проверки
         assertEquals(1, result.size());
         MealResponseDTO dto = result.get(0);
         assertEquals(date, dto.getMealDate());
@@ -151,7 +144,6 @@ class MealServiceTest {
 
     @Test
     void getMealsByUserAndDate_WithMultipleMeals_ShouldCalculateTotalsCorrectly() {
-        // Подготовка
         LocalDate date = LocalDate.now();
         User user = createTestUser();
         Dish dish1 = createTestDish();
@@ -177,10 +169,8 @@ class MealServiceTest {
         when(userRepository.existsById(1L)).thenReturn(true);
         when(mealRepository.findByUserIdAndMealDate(1L, date)).thenReturn(List.of(meal1, meal2));
 
-        // Вызов
         List<MealResponseDTO> result = mealService.getMealsByUserAndDate(1L, date);
 
-        // Проверки
         assertEquals(1, result.size());
         MealResponseDTO dto = result.get(0);
         assertEquals(700.0, dto.getTotalCalories()); // 400 + 300
@@ -189,7 +179,6 @@ class MealServiceTest {
         assertEquals(100.0, dto.getTotalCarbohydrates()); // 60 + 40
     }
 
-    // Тесты для convertToItemDTO
     @Test
     void convertToItemDTO_ShouldConvertCorrectly() {
         Meal meal = new Meal();

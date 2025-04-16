@@ -55,7 +55,6 @@ class DishServiceTest {
 
     @Test
     void create_WithNewDish_ShouldReturnSavedDishDTO() {
-        // Arrange
         DishDTO inputDto = createTestDishDTO();
         Dish dishToSave = createTestDish();
         Dish savedDish = createTestDish();
@@ -66,10 +65,8 @@ class DishServiceTest {
         when(dishRepository.save(dishToSave)).thenReturn(savedDish);
         when(dishMapper.toDTO(savedDish)).thenReturn(expectedDto);
 
-        // Act
         DishDTO result = dishService.create(inputDto);
 
-        // Assert
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals("Test Dish", result.getName());

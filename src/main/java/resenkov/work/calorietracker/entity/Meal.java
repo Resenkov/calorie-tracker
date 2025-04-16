@@ -36,7 +36,7 @@ public class Meal {
     @Column(nullable = false)
     private Integer servings;
 
-    // Методы для расчета нутриентов
+
     public Double getTotalCalories() {
         return dish.getCaloriesPerServing() * servings;
     }

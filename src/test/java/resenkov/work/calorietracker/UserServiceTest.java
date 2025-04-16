@@ -63,7 +63,6 @@ class UserServiceTest {
 
     @Test
     void registerUser_WithValidData_ShouldReturnUserDTO() {
-        // Подготовка
         UserDTO inputDto = createTestUserDTO();
         User savedUser = createTestUser();
 
@@ -71,10 +70,8 @@ class UserServiceTest {
         when(caloriesCalculator.calculateDailyCalories(any(User.class))).thenReturn(2500.0);
         when(userRepository.save(any(User.class))).thenReturn(savedUser);
 
-        // Вызов
         UserDTO result = userService.registerUser(inputDto);
 
-        // Проверки
         assertEquals(1L, result.getId());
         assertEquals("test@mail.com", result.getEmail());
         verify(userRepository).save(any(User.class));
