@@ -49,11 +49,6 @@ public class UserController {
         return ResponseEntity.ok(user.getDailyCalories());
     }
 
-    @GetMapping("/by-id/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
-        UserDTO user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
-    }
 
     /**
     Метод для проверки лимита дневной нормы калорий.
