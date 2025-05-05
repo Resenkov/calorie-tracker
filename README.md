@@ -130,4 +130,4 @@ V{версия}__{описание}.sql
 
 ### Контактные данные
 Почта: roma.esenkov@yandex.ru
-Telegram: @romanesenk
+Telegram: @rsenkovr
